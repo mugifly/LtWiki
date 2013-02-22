@@ -42,21 +42,19 @@
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
 					<a class="brand" href="/" class="active" style="color:white;"><%= title %></a>
 					<div class="nav-collapse collapse">
-						<ul class="nav">
+						<ul class="nav pull-right">
 							<!-- Navigation -->
 							<li><a href="/"><%=l 'home' %></a></li>
 							<li><a href="/sp:new"><%=l 'page_new' %></a></li>
+							<li><a href="/sp:list"><%= l 'page_list' %></a></li>
 							% unless ($is_sp_page) {
 								<li><a href="<%= $page_name %>/sp:edit"><%= l 'page_edit' %></a></li>
 								<li><a href="<%= $page_name %>/sp:delete"><%= l 'page_delete' %></a></li>
 								<li><a href="<%= $page_name %>/sp:history"><%= l 'page_history' %></a></li>
 							% }
-							<li><a href="/sp:list"><%= l 'page_list' %></a></li>
 							<!---->
-						</ul>
 						<% if ($self->ownUserId() eq "") { %>
 							<!-- for guest (login box) -->
-							<ul class="nav pull-right">
 								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown"><%=l 'login' %><b class="caret"></b></a>
 									<ul class="dropdown-menu">
@@ -72,10 +70,8 @@
 										</li>
 									</ul>
 								</li>
-							</ul>
 						<% } else { %>
 							<!-- for logged-in -->
-							<ul class="nav pull-right">
 								<li class="dropdown">
 									<a href="#" class="dropdown-toggle" data-toggle="dropdown">User <b class="caret"></b></a>
 									<ul class="dropdown-menu">
@@ -83,10 +79,10 @@
 										<li class="divider"></li>
 										<li><%= link_to '/session/logout' => begin %><%=l 'logout' %><% end %></li>
 									</ul>
-									</li>
-							</ul>
+								</li>
 						<% } %>
 						<!---->
+						</ul>
 					</div><!--/.nav-collapse -->
 				</div>
 			</div>

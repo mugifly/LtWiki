@@ -5,10 +5,9 @@
 % } else {
 %	 title	l('page_edit')
 % }
-
+<form method="post" action="?">
 <div class="row-fluid">
 	<div class="span10">
-		<form method="post" action="?">
 			<fieldset>
 				<legend>
 					<% if ($is_new_page) { %>
@@ -30,7 +29,6 @@
 			<div>
 				<input type="submit" value="保存" class="btn btn-primary">
 			</div>
-		</form>
 	</div>
 	<div class="span2">
 		<div class="well">
@@ -43,16 +41,28 @@
 		<div class="well">
 			<h5><%= l('page_permission') %></h5>
 
-				<h6><%= l('permission_scope_show') %></h6>
+				<h6><%= l('permission_scope_view') %></h6>
 				<small>
-				<input type="radio" name="permission_show" value="everybody"> <%= l('permission_role_everybody') %><br>
-				<input type="radio" name="permission_show" value="loggedin"> <%= l('permission_role_loggedin') %>
+				% if($permission_view eq 'loggedin') {
+					<input type="radio" name="permission_view" value="everybody"> <%= l('permission_role_everybody') %><br>
+					<input type="radio" name="permission_view" value="loggedin" checked="1"> <%= l('permission_role_loggedin') %>
+				% } else {
+					<input type="radio" name="permission_view" value="everybody" checked="1"> <%= l('permission_role_everybody') %><br>
+					<input type="radio" name="permission_view" value="loggedin"> <%= l('permission_role_loggedin') %>
+				% }
 				</small>
+
 				<h6><%= l('permission_scope_edit') %></h6>
 				<small>
-				<input type="radio" name="permission_edit" value="everybody"> <%= l('permission_role_everybody') %><br>
-				<input type="radio" name="permission_edit" value="loggedin"> <%= l('permission_role_loggedin') %>
+				% if($permission_edit eq 'loggedin') {
+					<input type="radio" name="permission_edit" value="everybody"> <%= l('permission_role_everybody') %><br/>
+					<input type="radio" name="permission_edit" value="loggedin" checked="1"> <%= l('permission_role_loggedin') %>
+				% } else {
+					<input type="radio" name="permission_edit" value="everybody" checked="1"> <%= l('permission_role_everybody') %><br/>
+					<input type="radio" name="permission_edit" value="loggedin"> <%= l('permission_role_loggedin') %>
+				% }
 				</small>
 		</div>
 	</div>
 </div>
+</form>

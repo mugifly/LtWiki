@@ -126,8 +126,8 @@ sub page_edit {
 		my $page = $self->db->set('page' => {
 			name => $save_name,
 			content => $self->param('save_content'),
-			role_view	=>	0,
-			role_edit	=>	0,
+			role_view	=>	$self->param('permission_view'),
+			role_edit	=>	$self->param('permission_edit'),
 			user_id		=>	-1,
 			save_time	=>	time(),
 			save_ip		=>	$self->tx->remote_address,
@@ -149,6 +149,8 @@ sub page_edit {
 					is_sp_page => 1,
 					page_name => $target_page,
 					page_content => $page_row->content,
+					permission_view => $page_row->role_view,
+					permission_edit => $page_row->role_edit,
 				);
 				return 1;
 			}
@@ -160,6 +162,8 @@ sub page_edit {
 			is_sp_page => 1,
 			page_name => $target_page,
 			page_content => '',
+			permission_view => 'everybody',
+			permission_edit => 'everybody',
 		);
 	}
 }

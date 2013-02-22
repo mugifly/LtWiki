@@ -20,6 +20,49 @@ column_sugar 'page.save_time' => int => {
 	},
 };
 
+column_sugar 'page.save_time' => int => {
+	inflate => sub { # DB -> Object
+		return Time::Piece->new($_[0]);
+	},
+	deflate => sub { # Object -> DB
+		ref( $_[0] ) && $_[0]->isa('Time::Piece') ? $_[0]->epoch : $_[0];
+	},
+};
+
+column_sugar 'page.role_view' => int => {
+	inflate => sub { # DB -> Object
+		if($_[0] eq '1') {
+			return 'loggedin';
+		} else {
+			return 'everybody';
+		}
+	},
+	deflate => sub { # Object -> DB
+		if($_[0] eq 'loggedin') {
+			return '1';
+		} else {
+			return '0';
+		}
+	},
+};
+
+column_sugar 'page.role_edit' => int => {
+	inflate => sub { # DB -> Object
+		if($_[0] eq '1') {
+			return 'loggedin';
+		} else {
+			return 'everybody';
+		}
+	},
+	deflate => sub { # Object -> DB
+		if($_[0] eq 'loggedin') {
+			return '1';
+		} else {
+			return '0';
+		}
+	},
+};
+
 ## Tables ##########
 
 # Table: user
@@ -71,14 +114,10 @@ install_model page => schema {
 	};
 
 	# Permission - View (0=everybody, 1=logged-in, 10=Administrator)
-	column 'role_view' => int => {
-		required	=>	1,
-	};
+	column 'page.role_view';
 
 	# Permission - Edit
-	column 'role_edit' => int => {
-		required	=>	1,
-	};
+	column 'page.role_edit';
 
 	# Saved User ID
 	column 'user.id'; # user_id
