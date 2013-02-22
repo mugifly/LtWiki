@@ -4,6 +4,7 @@ use utf8;
 
 our %Lexicon = (
 	home => 'ホーム',
+	login => 'ログイン',
 	page_new => '新しいページ',
 	page_edit => '編集',
 	page_delete => '削除',
@@ -14,7 +15,8 @@ our %Lexicon = (
 	permission_scope_edit => '編集権限',
 	permission_role_everybody => '誰でも',
 	permission_role_loggedin => 'ログインユーザ',
-	login => 'ログイン',
+	message_delete_confirm => 'ページを削除します。よろしいですか？',
+	button_delete => '削除する',
 );
 
 1;
