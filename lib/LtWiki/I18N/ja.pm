@@ -15,6 +15,7 @@ our %Lexicon = (
 	permission_scope_edit => '編集権限',
 	permission_role_everybody => '誰でも',
 	permission_role_loggedin => 'ログインユーザ',
+	message_page_notfound => 'ページが見つかりません :(',
 	message_delete_confirm => 'ページを削除します。よろしいですか？',
 	button_delete => '削除する',
 );

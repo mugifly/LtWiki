@@ -48,7 +48,7 @@ sub startup {
 
 	# Set database helper
 	$self->attr(db => sub{return $schema});
-	$self->helper('db' => sub { shift->app->schema });
+	$self->helper('db' => sub { shift->app->db });
 	
 	# Bridge for pre-processing
 	$r = $r->bridge->to('bridge#pre_process');

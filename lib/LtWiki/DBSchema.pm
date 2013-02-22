@@ -60,7 +60,7 @@ install_model page => schema {
 	utf8_column 'content' => longtext => {
 	};
 
-	# Permission - View
+	# Permission - View (0=everybody, 1=logged-in, 10=Administrator)
 	column 'role_view' => int => {
 		required	=>	1,
 	};

@@ -20,11 +20,11 @@
 			</fieldset>
 			
 			<div>
-				<input type="text" name="page_name" placeholder="<%= l('page_name') %>" value="<%= $page_name %>" class="span12">
+				<input type="text" name="save_name" placeholder="<%= l('page_name') %>" value="<%= $page_name %>" class="span12">
 			</div>
 
 			<div>
-				<textarea name="page_body" rows="18" class="span12"></textarea>
+				<textarea name="save_content" rows="18" class="span12"></textarea>
 			</div>
 
 			<div>
