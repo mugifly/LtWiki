@@ -48,9 +48,9 @@
 							<li><a href="/sp:new"><%=l 'page_new' %></a></li>
 							<li><a href="/sp:list"><%= l 'page_list' %> &amp; <%= l 'page_search' %></a></li>
 							% unless ($is_sp_page) {
-								<li><a href="<%= $page_name %>/sp:edit"><%= l 'page_edit' %></a></li>
-								<li><a href="<%= $page_name %>/sp:delete"><%= l 'page_delete' %></a></li>
-								<li><a href="<%= $page_name %>/sp:history"><%= l 'page_history' %></a></li>
+								<li><%= link_to "/$page_name/sp:edit" => begin %><%= l 'page_edit' %><% end %></li>
+								<li><%= link_to "/$page_name/sp:delete" => begin %><%= l 'page_delete' %><% end %></li>
+								<li><%= link_to "/$page_name/sp:history" => begin %><%= l 'page_history' %><% end %></li>
 							% }
 							<li><a href="/sp:search"></a></li>
 							<!---->

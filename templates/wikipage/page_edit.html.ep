@@ -6,6 +6,7 @@
 %	 title	l('page_edit')
 % }
 <form method="post" action="?">
+<input type="hidden" name="latest_save_time" value="<%= $latest_save_time->epoch() %>">
 <div class="row-fluid">
 	<div class="span10">
 			<fieldset>
@@ -18,6 +19,14 @@
 				</legend>
 			</fieldset>
 			
+			% if ($error_flg eq 'conflict'){
+				<div class="alert alert-error">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+					<%= l('message_error_conflict') %>
+					<%= link_to "/$page_name" => begin %><%= $page_name %><% end %>
+				</div>
+			% }
+
 			<div>
 				<input type="text" name="save_name" placeholder="<%= l('page_name') %>" value="<%= $page_name %>" class="span12">
 			</div>

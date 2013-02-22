@@ -23,6 +23,7 @@ our %Lexicon = (
 	permission_role_loggedin => 'Logged-in',
 	message_page_notfound => 'Notfound :(',
 	message_delete_confirm => 'Are you sure to delete it? really?',
+	message_error_conflict	=>	'[Error] This page has been changed by another user since you started editing this page.',
 	button_search => 'Search',
 	button_delete => 'Delete',
 );

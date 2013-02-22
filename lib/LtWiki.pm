@@ -61,12 +61,12 @@ sub startup {
 	$r->route('/:mode', mode => ['sp:new'])->to('wikipage#page_edit',); # New page
 	$r->route('/:mode', mode => ['sp:list'])->to('wikipage#page_list'); # List pages
 
-	$r->route('/:page_name')->to('wikipage#page_show'); # Show page
-	$r->route('/:page_name/:mode', mode => ['sp:edit'])->to('wikipage#page_edit'); # Edit page
-	$r->route('/:page_name/:mode', mode => ['sp:delete'])->to('wikipage#page_delete'); # Delete page
-	$r->route('/:page_name/:mode', mode => ['sp:source'])->to('wikipage#page_source'); # Show page source
-	$r->route('/:page_name/:mode/:save_time', mode => ['sp:source'])->to('wikipage#page_source'); # Show page source
-	$r->route('/:page_name/:mode', mode => ['sp:history'])->to('wikipage#page_histories'); # Show histories page
+	$r->route('/:page_name', page_name => qr/[\w\-\_\/]+/)->to('wikipage#page_show'); # Show page
+	$r->route('/:page_name/:mode', page_name => qr/[\w\-\_\/]+/, mode => ['sp:edit'])->to('wikipage#page_edit'); # Edit page
+	$r->route('/:page_name/:mode', page_name => qr/[\w\-\_\/]+/, mode => ['sp:delete'])->to('wikipage#page_delete'); # Delete page
+	$r->route('/:page_name/:mode', page_name => qr/[\w\-\_\/]+/, mode => ['sp:source'])->to('wikipage#page_source'); # Show page source
+	$r->route('/:page_name/:mode/:save_time', page_name => qr/[\w\-\_\/]+/,  mode => ['sp:source'])->to('wikipage#page_source'); # Show page source
+	$r->route('/:page_name/:mode', page_name => qr/[\w\-\_\/]+/, mode => ['sp:history'])->to('wikipage#page_histories'); # Show histories page
 	
 	$r->route('/session/oauth_google_redirect')->to('session#oauth_google_redirect');
 	$r->route('/session/oauth_google_callback')->to('session#oauth_google_callback');

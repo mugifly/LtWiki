@@ -4,6 +4,10 @@ use Mojo::Base 'Mojolicious::Controller';
 # Show page
 sub page_show {
 	my $self = shift;
+
+	# Load the helper
+	$self->app->plugin('LtWiki::Helper::Wiki');
+
 	my $page_name = $self->param('page_name');
 	unless(defined($page_name)){
 		# Redirect default page
@@ -119,66 +123,88 @@ sub page_histories {
 sub page_edit {
 	my $self = shift;
 	my $target_page = defined($self->param('page_name')) ? $self->param('page_name') : '';
+	my $error_flg = '';
 
 	if(defined($self->param('save_name')) && $self->param('save_name') ne "" && defined($self->param('save_content'))){
-		# Save
-		my $save_name =  $self->param('save_name');
-		my $page = $self->db->set('page' => {
-			name => $save_name,
-			content => $self->param('save_content'),
-			role_view	=>	$self->param('permission_view'),
-			role_edit	=>	$self->param('permission_edit'),
-			user_id		=>	-1,
-			save_time	=>	time(),
-			save_ip		=>	$self->tx->remote_address,
-		});
+		# Save mode
 
-		# Auto delete
-		my $c = 0;
-		$page = $self->db->get('page' => {
+		my $reqest_latest_save_time = $self->param('latest_save_time'); # for conflict check.
+
+		# Check old page
+		my $old_page = $self->db->get('page' => {
 				where => [ name => $target_page ],
 				order => [ { id => 'DESC' } ], # It to get a latest revision.
 		});
-		while(my $page_row = $page->next){
+		my $c = 0;
+		while(my $page_row = $old_page->next){
+			# Conflict check (Compare the save time, Request and Latest.)
+			if($c eq 0 && ($page_row->save_time->epoch() ne $reqest_latest_save_time)){ 
+				# CONFLICT!
+				$error_flg = "conflict";
+				last;
+			}
+
+			# Auto delete
 			if($c >= $self->app->config->{store_generation}){
 				$page_row->delete();
 			}
 			$c += 1;
 		}
-		# Redirect
-		$self->redirect_to('/'.$save_name);
-	} else {
-		# Editor
-		if($target_page ne ""){
-			# Load a page
-			my $page_row = $self->db->get('page' => {
-				where => [ name => $target_page ],
-				order => [ { id => 'DESC' } ], # It to get a latest revision.
-			})->next;
-			if(defined($page_row)){
-				# Edit mode
-				$self->render(
-					is_new_page => 0,
-					is_sp_page => 1,
-					page_name => $target_page,
-					page_content => $page_row->content,
-					permission_view => $page_row->role_view,
-					permission_edit => $page_row->role_edit,
-				);
-				return 1;
-			}
-		}
 
-		# New mode
-		$self->render(
-			is_new_page => 1,
-			is_sp_page => 1,
-			page_name => $target_page,
-			page_content => '',
-			permission_view => 'everybody',
-			permission_edit => 'everybody',
-		);
+		if($error_flg eq ''){ # Not error...
+			# Save page to database
+			my $save_name =  $self->param('save_name');
+			my $page = $self->db->set('page' => {
+				name => $save_name,
+				content => $self->param('save_content'),
+				role_view	=>	$self->param('permission_view'),
+				role_edit	=>	$self->param('permission_edit'),
+				user_id		=>	-1,
+				save_time	=>	time(),
+				save_ip		=>	$self->tx->remote_address,
+			});
+
+			# Redirect
+			$self->redirect_to('/'.$save_name);
+		}
 	}
+
+	if($target_page ne ""){
+		# Editor mode - modified
+
+		# Load a page
+		my $page_row = $self->db->get('page' => {
+			where => [ name => $target_page ],
+			order => [ { id => 'DESC' } ], # It to get a latest revision.
+		})->next;
+		if(defined($page_row)){
+			# Edit mode
+			$self->render(
+				is_new_page 		=> 0,
+				is_sp_page 		=> 1,
+				page_name 		=> $target_page,
+				page_content 	=> $page_row->content,
+				latest_save_time	=> $page_row->save_time,
+				permission_view => $page_row->role_view,
+				permission_edit => $page_row->role_edit,
+				error_flg		=> $error_flg,
+			);
+			return 1;
+		}
+	}
+
+	# Editor mode - New
+
+	$self->render(
+		is_new_page => 1,
+		is_sp_page => 1,
+		page_name => $target_page,
+		page_content => '',
+		latest_save_time	=> '',
+		permission_view => 'everybody',
+		permission_edit => 'everybody',
+		error_flg		=> $error_flg,
+	);
 }
 
 # Delete page

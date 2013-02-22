@@ -23,6 +23,7 @@ our %Lexicon = (
 	permission_role_loggedin => 'ログインユーザ',
 	message_page_notfound => 'お探しのページは見つかりませんでした。(´・ω・｀)',
 	message_delete_confirm => 'ページを削除します。よろしいですか？',
+	message_error_conflict => 'エラー:あなたが編集している間に他のセッションによって編集が行われました。最新のページを確認してください。',
 	button_search => '検索する',
 	button_delete => '削除する',
 );
