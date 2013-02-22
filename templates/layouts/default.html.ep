@@ -44,9 +44,9 @@
 					<div class="nav-collapse collapse">
 						<ul class="nav pull-right">
 							<!-- Navigation -->
-							<li><a href="/"><%=l 'home' %></a></li>
-							<li><a href="/sp:new"><%=l 'page_new' %></a></li>
-							<li><a href="/sp:list"><%= l 'page_list' %> &amp; <%= l 'page_search' %></a></li>
+							<li><%= link_to "/" => begin %><%=l 'home' %><% end %></li>
+							<li><%= link_to "/sp:new" => begin %><%=l 'page_new' %><% end %></li>
+							<li><%= link_to "/sp:list" => begin %><%= l 'page_list' %> &amp; <%= l 'page_search' %><% end %></li>
 							% unless ($is_sp_page) {
 								<li><%= link_to "/$page_name/sp:edit" => begin %><%= l 'page_edit' %><% end %></li>
 								<li><%= link_to "/$page_name/sp:delete" => begin %><%= l 'page_delete' %><% end %></li>
