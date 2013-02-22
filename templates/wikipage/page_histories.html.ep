@@ -10,10 +10,10 @@
 	</tr>
 <% foreach my $item(@$histories){ %>
 	<tr>
-		<td><a href="/<%= $page_name %>/sp:source/<%= $item->{save_time}->epoch %>"><%= $item->{save_time} %></a></td>
+		<td><%= link_to "/$page_name/sp:source/".$item->{save_time}->epoch => begin %><%= $item->{save_time} %><% end %></td>
 		<td><%= $item->{user_id} %></td>
 	</tr>
 <% } %>
 </table>
 
-<a href="/<%= $page_name %>">&laquo; <%= $page_name %></a>
+<%= link_to "/$page_name" => begin %>&laquo; <%= $page_name %><% end %>

@@ -2,7 +2,7 @@
 <html lang="ja">
 	<head>
 		<meta charset="utf-8">
-		<title><%= title %> - <%= $site_name %> </title>
+		<title><%= title %> - <%= $site_name %></title>
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<meta name="description" content="">
 		<meta name="author" content="">
@@ -40,7 +40,7 @@
 			<div class="navbar-inner">
 				<div class="container">
 					<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </a>
-					<a class="brand" href="/"><%= $site_name %></a>
+					<a class="brand" href="/" class="active" style="color:white;"><%= title %></a>
 					<div class="nav-collapse collapse">
 						<ul class="nav">
 							<!-- Navigation -->

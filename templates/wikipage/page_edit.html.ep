@@ -8,7 +8,7 @@
 
 <div class="row-fluid">
 	<div class="span10">
-		<form method="post">
+		<form method="post" action="?">
 			<fieldset>
 				<legend>
 					<% if ($is_new_page) { %>

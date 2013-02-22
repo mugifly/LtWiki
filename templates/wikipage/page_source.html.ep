@@ -11,6 +11,8 @@
 % } else { # Normal mode
 	<h2><%= $page_name %></h2>
 % }
-<hr>
+
 <pre><%= $page_source %></pre>
-<a href="/<%= $page_name %>/sp:history">&laquo; <%= l('page_history') %>: <%= $page_name %></a>
+<div>
+	<%= link_to "/$page_name/sp:history" => begin %>&laquo; <%= l('page_history') %>: <%= $page_name %><% end %>
+</div>

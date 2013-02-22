@@ -5,5 +5,5 @@
 <form method="post">
 	<p><%= l('message_delete_confirm') %></p>
 	<input type="submit" class="btn btn-danger" value="<%= l('button_delete') %>">&nbsp;&nbsp;
-	<a href="/<%= $page_name %>">キャンセル</a>
+	<%= link_to "/$page_name" => begin %>キャンセル<% end %>
 </form>

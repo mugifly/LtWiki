@@ -13,10 +13,10 @@
 <% foreach my $k(keys(%$pages)){ %>
 	% my $item = $pages->{$k};
 	<tr>
-		<td><a href="/<%= $item->{name} %>"><%= $item->{name} %></a></td>
+		<td><%= link_to "/$item->{name}" => begin %><%= $item->{name} %><% end %></td>
 		<td><%= $item->{save_time} %></td>
 		<td><%= $item->{user_id} %></td>
-		<td><a href="/<%= $item->{name} %>/sp:history/"><%= l('page_history') %></a></td>
+		<td><%= link_to "/$item->{name}/sp:history/" => begin %><%= l('page_history') %><% end %></td>
 	</tr>
 <% } %>
 </table>
