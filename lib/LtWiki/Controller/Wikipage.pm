@@ -132,6 +132,19 @@ sub page_edit {
 			save_time	=>	time(),
 			save_ip		=>	$self->tx->remote_address,
 		});
+
+		# Auto delete
+		my $c = 0;
+		$page = $self->db->get('page' => {
+				where => [ name => $target_page ],
+				order => [ { id => 'DESC' } ], # It to get a latest revision.
+		});
+		while(my $page_row = $page->next){
+			if($c >= $self->app->config->{store_generation}){
+				$page_row->delete();
+			}
+			$c += 1;
+		}
 		# Redirect
 		$self->redirect_to('/'.$save_name);
 	} else {

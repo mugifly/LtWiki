@@ -30,6 +30,7 @@ sub startup {
 	
 	# Read the app configuration
 	my $conf = $self->plugin('Config',{file => 'config/config.conf'});
+	unless(defined($conf->{store_generation})){ $conf->{store_generation} = 20; }
 	
 	# Set configration for cookie
 	$self->app->sessions->cookie_name($conf->{session_name} || 'ltwiki');
