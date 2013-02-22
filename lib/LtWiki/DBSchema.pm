@@ -8,8 +8,18 @@ use parent qw/ Data::Model /;
 use Data::Model::Schema sugar => 'ltwiki';
  
 ## Column-sugars ##########
+
 column_sugar 'user.id';
  
+column_sugar 'page.save_time' => int => {
+	inflate => sub { # DB -> Object
+		return Time::Piece->new($_[0]);
+	},
+	deflate => sub { # Object -> DB
+		ref( $_[0] ) && $_[0]->isa('Time::Piece') ? $_[0]->epoch : $_[0];
+	},
+};
+
 ## Tables ##########
 
 # Table: user
@@ -74,9 +84,7 @@ install_model page => schema {
 	column 'user.id'; # user_id
 
 	# Saved Time
-	column 'save_time' => int => {
-		unsigned		=>	1,
-	};
+	column 'page.save_time';
 
 	# Saved User IP-address
 	column 'save_ip' => char => {

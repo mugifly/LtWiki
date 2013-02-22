@@ -1,0 +1,22 @@
+% layout 'default';
+% title l('page_list');
+
+<h2><%= l('page_list') %></h2>
+
+<table class="table table-striped">
+	<tr>
+		<th><%= l('page_name') %></th>
+		<th><%= l('page_modified_date') %></th>
+		<th><%= l('page_modified_by') %></th>
+		<th><%= l('page_history') %></th>
+	</tr>
+<% foreach my $k(keys(%$pages)){ %>
+	% my $item = $pages->{$k};
+	<tr>
+		<td><a href="/<%= $item->{name} %>"><%= $item->{name} %></a></td>
+		<td><%= $item->{save_time} %></td>
+		<td><%= $item->{user_id} %></td>
+		<td><a href="/<%= $item->{name} %>/sp:history/"><%= l('page_history') %></a></td>
+	</tr>
+<% } %>
+</table>

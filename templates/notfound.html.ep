@@ -1,0 +1,5 @@
+% layout 'default';
+% title l('page_notfound');
+
+<h1><%= l('page_notfound') %></h1>
+<%= l('message_page_notfound') %>

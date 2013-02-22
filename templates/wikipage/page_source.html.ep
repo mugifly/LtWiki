@@ -1,0 +1,16 @@
+% layout 'default';
+
+% if($is_specified_save_time){
+	% title  "$page_name (Old: $page_save_time)";
+% } else {
+	% title  $page_name;
+% }
+
+% if($is_specified_save_time){ # History mode
+	<h2><%= $page_name %> - <%= l('page_modified_date') %>:<%= $page_save_time %></h2>
+% } else { # Normal mode
+	<h2><%= $page_name %></h2>
+% }
+<hr>
+<pre><%= $page_source %></pre>
+<a href="/<%= $page_name %>/sp:history">&laquo; <%= l('page_history') %>: <%= $page_name %></a>

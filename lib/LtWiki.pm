@@ -11,6 +11,7 @@ use Data::Model::Driver::DBI;
 use LtWiki::DBSchema;
 
 use Text::Markdown;
+use Time::Piece;
 
 use Net::OAuth2::Client;
 
@@ -57,10 +58,14 @@ sub startup {
 	# Routes
 	$r->route('')->to('wikipage#page_show',); # Show default page
 	$r->route('/:mode', mode => ['sp:new'])->to('wikipage#page_edit',); # New page
+	$r->route('/:mode', mode => ['sp:list'])->to('wikipage#page_list'); # List pages
 
 	$r->route('/:page_name')->to('wikipage#page_show'); # Show page
 	$r->route('/:page_name/:mode', mode => ['sp:edit'])->to('wikipage#page_edit'); # Edit page
 	$r->route('/:page_name/:mode', mode => ['sp:delete'])->to('wikipage#page_delete'); # Delete page
+	$r->route('/:page_name/:mode', mode => ['sp:source'])->to('wikipage#page_source'); # Show page source
+	$r->route('/:page_name/:mode/:save_time', mode => ['sp:source'])->to('wikipage#page_source'); # Show page source
+	$r->route('/:page_name/:mode', mode => ['sp:history'])->to('wikipage#page_histories'); # Show histories page
 	
 	$r->route('/session/oauth_google_redirect')->to('session#oauth_google_redirect');
 	$r->route('/session/oauth_google_callback')->to('session#oauth_google_callback');

@@ -1,5 +1,5 @@
 % layout 'default';
 % title  $page_name;
-<h2><%= $page_name %></h2>
+<h1><%= $page_name %></h1>
 <hr>
 <%= Mojo::ByteStream->new($page_content) %>

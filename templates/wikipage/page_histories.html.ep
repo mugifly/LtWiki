@@ -1,0 +1,19 @@
+% layout 'default';
+% title l('page_history');
+
+<h2><%= l('page_history') %>: <%= $page_name %></h2>
+
+<table class="table table-striped">
+	<tr>
+		<th><%= l('page_modified_date') %></th>
+		<th><%= l('page_modified_by') %></th>
+	</tr>
+<% foreach my $item(@$histories){ %>
+	<tr>
+		<td><a href="/<%= $page_name %>/sp:source/<%= $item->{save_time}->epoch %>"><%= $item->{save_time} %></a></td>
+		<td><%= $item->{user_id} %></td>
+	</tr>
+<% } %>
+</table>
+
+<a href="/<%= $page_name %>">&laquo; <%= $page_name %></a>

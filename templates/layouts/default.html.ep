@@ -44,12 +44,15 @@
 					<div class="nav-collapse collapse">
 						<ul class="nav">
 							<!-- Navigation -->
-							<li class="active"><a href="/"><%=l 'home' %></a></li>
+							<li><a href="/"><%=l 'home' %></a></li>
 							<li><a href="/sp:new"><%=l 'page_new' %></a></li>
 							% unless ($is_sp_page) {
-								<li><a href="<%= $page_name %>/sp:edit"><%=l 'page_edit' %></a></li>
-								<li><a href="<%= $page_name %>/sp:delete"><%=l 'page_delete' %></a></li>
+								<li><a href="<%= $page_name %>/sp:edit"><%= l 'page_edit' %></a></li>
+								<li><a href="<%= $page_name %>/sp:delete"><%= l 'page_delete' %></a></li>
+								<li><a href="<%= $page_name %>/sp:history"><%= l 'page_history' %></a></li>
 							% }
+							<li><a href="/sp:list"><%= l 'page_list' %></a></li>
+							<!---->
 						</ul>
 						<% if ($self->ownUserId() eq "") { %>
 							<!-- for guest (login box) -->
