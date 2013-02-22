@@ -1,0 +1,4 @@
+% layout 'default';
+% title l('page_delete')
+
+次のページを削除します。よろしいですか？

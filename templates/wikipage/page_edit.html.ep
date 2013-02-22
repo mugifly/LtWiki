@@ -1,0 +1,58 @@
+% layout 'default';
+
+% if ($is_new_page) {
+%	 title  l('page_new')
+% } else {
+%	 title	l('page_edit')
+% }
+
+<div class="row-fluid">
+	<div class="span10">
+		<form method="post">
+			<fieldset>
+				<legend>
+					<% if ($is_new_page) { %>
+				 		<%= l('page_new') %>
+					<% } else { %>
+				 		<%= l('page_edit') %> : <%= $page_name %>
+					<% } %>
+				</legend>
+			</fieldset>
+			
+			<div>
+				<input type="text" name="page_name" placeholder="<%= l('page_name') %>" value="<%= $page_name %>" class="span12">
+			</div>
+
+			<div>
+				<textarea name="page_body" rows="18" class="span12"></textarea>
+			</div>
+
+			<div>
+				<input type="submit" value="保存" class="btn btn-primary">
+			</div>
+		</form>
+	</div>
+	<div class="span2">
+		<div class="well">
+			<h5>Markdown</h5>
+			<small>
+				Wiki page are parsed with
+				<a href="http://daringfireball.net/projects/markdown/syntax">Markdown</a>
+			</small>
+		</div>
+		<div class="well">
+			<h5><%= l('page_permission') %></h5>
+
+				<h6><%= l('permission_scope_show') %></h6>
+				<small>
+				<input type="radio" name="permission_show" value="everybody"> <%= l('permission_role_everybody') %><br>
+				<input type="radio" name="permission_show" value="loggedin"> <%= l('permission_role_loggedin') %>
+				</small>
+				<h6><%= l('permission_scope_edit') %></h6>
+				<small>
+				<input type="radio" name="permission_edit" value="everybody"> <%= l('permission_role_everybody') %><br>
+				<input type="radio" name="permission_edit" value="loggedin"> <%= l('permission_role_loggedin') %>
+				</small>
+		</div>
+	</div>
+</div>
