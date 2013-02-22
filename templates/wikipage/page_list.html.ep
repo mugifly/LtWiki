@@ -1,22 +1,36 @@
 % layout 'default';
 % title l('page_list');
 
-<h2><%= l('page_list') %></h2>
-
-<table class="table table-striped">
-	<tr>
-		<th><%= l('page_name') %></th>
-		<th><%= l('page_modified_date') %></th>
-		<th><%= l('page_modified_by') %></th>
-		<th><%= l('page_history') %></th>
-	</tr>
-<% foreach my $k(keys(%$pages)){ %>
-	% my $item = $pages->{$k};
-	<tr>
-		<td><%= link_to "/$item->{name}" => begin %><%= $item->{name} %><% end %></td>
-		<td><%= $item->{save_time} %></td>
-		<td><%= $item->{user_id} %></td>
-		<td><%= link_to "/$item->{name}/sp:history/" => begin %><%= l('page_history') %><% end %></td>
-	</tr>
-<% } %>
-</table>
+<div class="row-fluid">
+	<div class="span9">
+		<h2><%= l('page_list') %></h2>
+		<table class="table table-striped">
+			<tr>
+				<th><%= l('page_name') %></th>
+				<th><%= l('page_modified_date') %></th>
+				<th><%= l('page_modified_by') %></th>
+				<th><%= l('page_history') %></th>
+			</tr>
+		<% foreach my $k(keys(%$pages)){ %>
+			% my $item = $pages->{$k};
+			<tr>
+				<td><%= link_to "/$item->{name}" => begin %><%= $item->{name} %><% end %></td>
+				<td><%= $item->{save_time} %></td>
+				<td><%= $item->{user_id} %></td>
+				<td><%= link_to "/$item->{name}/sp:history/" => begin %><%= l('page_history') %><% end %></td>
+			</tr>
+		<% } %>
+		</table>
+	</div>
+	<div class="span3">
+		<div class="well">
+			<h5><%= l('page_search') %></h5>
+			<form method="get" class="form-search" action="<%= url_for '/sp:list' %>">
+				<div class="input-append">
+					<input type="text" name="query" placeholder="" value="<%= $query %>" class="input-small search-query" autofocus="1">
+					<input type="submit" value="<%= l('button_search') %>" class="btn">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>

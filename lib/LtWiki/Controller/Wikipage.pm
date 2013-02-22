@@ -188,10 +188,20 @@ sub page_delete {
 sub page_list {
 	my $self = shift;
 
-	# List-up All page items
-	my $page = $self->db->get('page' => {
-		order => [ { id => 'DESC' } ],
-	});
+	my $page;
+	my $query = $self->param('query') || '';
+	if($query ne ''){
+		# Page name search
+		$page = $self->db->get('page' => {
+			where => [ name => {like => "\%$query\%"} ],
+			order => [ { id => 'DESC' } ],
+		});
+	}else{
+		# List-up page items
+		$page = $self->db->get('page' => {
+			order => [ { id => 'DESC' } ],
+		});
+	}
 
 	# Filter latest pages
 	my $pages = {};
@@ -201,7 +211,7 @@ sub page_list {
 		}
 	}
 
-	$self->render(pages => $pages, is_sp_page => 1, page_name => '');
+	$self->render(pages => $pages, is_sp_page => 1, page_name => '', query => $query);
 	return 0;
 }
 

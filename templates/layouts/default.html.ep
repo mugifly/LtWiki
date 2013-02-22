@@ -46,12 +46,13 @@
 							<!-- Navigation -->
 							<li><a href="/"><%=l 'home' %></a></li>
 							<li><a href="/sp:new"><%=l 'page_new' %></a></li>
-							<li><a href="/sp:list"><%= l 'page_list' %></a></li>
+							<li><a href="/sp:list"><%= l 'page_list' %> &amp; <%= l 'page_search' %></a></li>
 							% unless ($is_sp_page) {
 								<li><a href="<%= $page_name %>/sp:edit"><%= l 'page_edit' %></a></li>
 								<li><a href="<%= $page_name %>/sp:delete"><%= l 'page_delete' %></a></li>
 								<li><a href="<%= $page_name %>/sp:history"><%= l 'page_history' %></a></li>
 							% }
+							<li><a href="/sp:search"></a></li>
 							<!---->
 						<% if ($self->ownUserId() eq "") { %>
 							<!-- for guest (login box) -->

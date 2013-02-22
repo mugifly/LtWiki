@@ -16,12 +16,14 @@ our %Lexicon = (
 	page_modified_date => '変更日時',
 	page_permission => 'ページ権限',
 	page_notfound => 'ページがありません',
+	search_keyword => 'キーワード',
 	permission_scope_view => '閲覧権限',
 	permission_scope_edit => '編集権限',
 	permission_role_everybody => '誰でも',
 	permission_role_loggedin => 'ログインユーザ',
 	message_page_notfound => 'お探しのページは見つかりませんでした。(´・ω・｀)',
 	message_delete_confirm => 'ページを削除します。よろしいですか？',
+	button_search => '検索する',
 	button_delete => '削除する',
 );
 

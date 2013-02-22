@@ -16,12 +16,14 @@ our %Lexicon = (
 	page_modified_date => 'Date',
 	page_permission => 'Permission',
 	page_notfound => 'NotFound',
+	search_keyword => 'Keyword',
 	permission_scope_view => 'View',
 	permission_scope_edit => 'Edit',
 	permission_role_everybody => 'Everybody',
 	permission_role_loggedin => 'Logged-in',
 	message_page_notfound => 'Notfound :(',
 	message_delete_confirm => 'Are you sure to delete it? really?',
+	button_search => 'Search',
 	button_delete => 'Delete',
 );
 
