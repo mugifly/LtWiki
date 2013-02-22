@@ -35,6 +35,20 @@ sub startup {
 	# Set configration for cookie
 	$self->app->sessions->cookie_name($conf->{session_name} || 'ltwiki');
 	$self->secret('ltwiki-'.$conf->{session_secret});
+
+	# Reverse proxy support
+	$ENV{MOJO_REVERSE_PROXY} = 1;
+	$self->hook('before_dispatch' => sub {
+		my $self = shift;
+		if ( $self->req->headers->header('X-Forwarded-Host') && defined($conf->{base_path})) {
+			# Set url base-path (directory path)
+			my @basepaths = split(/\//,$self->config->{base_path});	shift @basepaths;
+			foreach my $part(@basepaths){
+				if($part eq ${$self->req->url->path->parts}[0]){ push @{$self->req->url->base->path->parts}, shift @{$self->req->url->path->parts};	
+				} else { last; }
+			}
+		}
+	});
 	
 	# Prepare database
 	my $schema = LtWiki::DBSchema->new();
