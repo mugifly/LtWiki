@@ -12,12 +12,10 @@ sub page_show {
 	}
 
 	# Load a page
-	my $page = $self->db->get('page' => {
-		where => [
-			name => $page_name
-		]
-	});
-	my $page_row = $page->next;
+	my $page_row = $self->db->get('page' => {
+		where => [ name => $page_name	],
+		order => [ { id => 'DESC' } ], # It to get a latest revision.
+	})->next;
 
 	unless(defined($page_row)){
 		# Page notfound
@@ -30,6 +28,7 @@ sub page_show {
 		return 0;
 	}
 
+	# Output a page
 	my $m = Text::Markdown->new;
 	$self->render(
 		page_name =>	$page_row->name,
@@ -41,14 +40,13 @@ sub page_show {
 # Edit page
 sub page_edit {
 	my $self = shift;
-	my $target_page = $self->param('page_name') || '';
+	my $target_page = defined($self->param('page_name')) ? $self->param('page_name') : '';
 
 	if(defined($self->param('save_name')) && $self->param('save_name') ne "" && defined($self->param('save_content'))){
 		# Save
-		$self->redirect_to('/');
-
+		my $save_name =  $self->param('save_name');
 		my $page = $self->db->set('page' => {
-			name => $self->param('save_name'),
+			name => $save_name,
 			content => $self->param('save_content'),
 			role_view	=>	0,
 			role_edit	=>	0,
@@ -56,23 +54,35 @@ sub page_edit {
 			save_time	=>	time(),
 			save_ip		=>	$self->tx->remote_address,
 		});
+		# Redirect
+		$self->redirect_to('/'.$save_name);
 	} else {
 		# Editor
-		if($target_page eq ''){
-			# New mode
-			$self->render(
-				is_new_page => 1,
-				is_sp_page => 1,
-				page_name => '',
-			);
-		} else {
-			# Edit mode
-			$self->render(
-				is_new_page => 0,
-				is_sp_page => 1,
-				page_name => $target_page,
-			);
+		if($target_page ne ""){
+			# Load a page
+			my $page_row = $self->db->get('page' => {
+				where => [ name => $target_page ],
+				order => [ { id => 'DESC' } ], # It to get a latest revision.
+			})->next;
+			if(defined($page_row)){
+				# Edit mode
+				$self->render(
+					is_new_page => 0,
+					is_sp_page => 1,
+					page_name => $target_page,
+					page_content => $page_row->content,
+				);
+				return 1;
+			}
 		}
+
+		# New mode
+		$self->render(
+			is_new_page => 1,
+			is_sp_page => 1,
+			page_name => $target_page,
+			page_content => '',
+		);
 	}
 }
 

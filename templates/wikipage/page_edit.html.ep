@@ -24,7 +24,7 @@
 			</div>
 
 			<div>
-				<textarea name="save_content" rows="18" class="span12"></textarea>
+				<textarea name="save_content" rows="18" class="span12"><%= $page_content %></textarea>
 			</div>
 
 			<div>
