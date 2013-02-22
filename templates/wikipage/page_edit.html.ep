@@ -6,7 +6,7 @@
 %	 title	l('page_edit')
 % }
 <form method="post" action="?">
-<input type="hidden" name="latest_save_time" value="<%= $latest_save_time->epoch() %>">
+<input type="hidden" name="latest_save_time" value="<%= $latest_save_time %>">
 <div class="row-fluid">
 	<div class="span10">
 			<fieldset>

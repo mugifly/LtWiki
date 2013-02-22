@@ -123,9 +123,15 @@ sub page_histories {
 sub page_edit {
 	my $self = shift;
 	my $target_page = defined($self->param('page_name')) ? $self->param('page_name') : '';
+	my $save_name = defined($self->param('save_name')) ? $self->param('save_name') : '';
 	my $error_flg = '';
 
-	if(defined($self->param('save_name')) && $self->param('save_name') ne "" && defined($self->param('save_content'))){
+	# Check save name
+	while(index($save_name, '/') eq 0){
+		substr($save_name,0,1) = '';
+	}
+
+	if($save_name ne '' && defined($self->param('save_content'))){
 		# Save mode
 
 		my $reqest_latest_save_time = $self->param('latest_save_time'); # for conflict check.
@@ -153,7 +159,6 @@ sub page_edit {
 
 		if($error_flg eq ''){ # Not error...
 			# Save page to database
-			my $save_name =  $self->param('save_name');
 			my $page = $self->db->set('page' => {
 				name => $save_name,
 				content => $self->param('save_content'),
@@ -183,8 +188,8 @@ sub page_edit {
 				is_new_page 		=> 0,
 				is_sp_page 		=> 1,
 				page_name 		=> $target_page,
-				page_content 	=> $page_row->content,
-				latest_save_time	=> $page_row->save_time,
+				page_content 	=> defined($self->param('save_content')) ? $self->param('save_content') : $page_row->content,
+				latest_save_time	=> $page_row->save_time->epoch(),
 				permission_view => $page_row->role_view,
 				permission_edit => $page_row->role_edit,
 				error_flg		=> $error_flg,
@@ -196,13 +201,13 @@ sub page_edit {
 	# Editor mode - New
 
 	$self->render(
-		is_new_page => 1,
-		is_sp_page => 1,
-		page_name => $target_page,
-		page_content => '',
+		is_new_page		=> 1,
+		is_sp_page		=> 1,
+		page_name		=> $target_page,
+		page_content		=> defined($self->param('save_content')) ? $self->param('save_content') : '',
 		latest_save_time	=> '',
-		permission_view => 'everybody',
-		permission_edit => 'everybody',
+		permission_view	=> 'everybody',
+		permission_edit	=> 'everybody',
 		error_flg		=> $error_flg,
 	);
 }
